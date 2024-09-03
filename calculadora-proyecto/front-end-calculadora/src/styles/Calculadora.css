@@ -7,7 +7,7 @@ body{
 .container{
     text-align: center;
     justify-content: center;
-    background-color: gray;
+    background-color: rgb(103, 49, 190);
     padding: 50px;
     margin: 50px;
     border-radius: 50px;
@@ -27,7 +27,7 @@ body{
     border-radius: 10px;
     width: 150px;
     height: 50px;
-    background-color: rgb(121, 89, 89);
+    background-color: rgb(194, 94, 94);
     color: white;
     border-color: rgb(121, 89, 89);
     margin-left: 10px;
