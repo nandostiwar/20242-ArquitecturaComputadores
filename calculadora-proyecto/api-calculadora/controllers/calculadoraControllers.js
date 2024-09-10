@@ -1,4 +1,4 @@
-const {add, subtract, multiply} = require('../operaciones/operaciones.js');
+const {add, subtract, multiply, numMax} = require('../operaciones/operaciones.js');
 
 function sumar(req, res){
     const {body} = req;
@@ -27,8 +27,18 @@ function multiplicar(req, res){
     })
 }
 
+function mayor(req, res){
+    const {body} = req;
+    const {number1, number2} = body;
+    const result = numMax(number1, number2);
+    res.json({
+        resultado: result
+    })
+}
+
 module.exports = {
     sumar,
     restar,
-    multiplicar
+    multiplicar,
+    mayor
 }

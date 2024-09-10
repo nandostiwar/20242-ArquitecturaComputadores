@@ -23,8 +23,19 @@ function multiply(a, b){
     return number1 * number2;
 }
 
+function numMax(a, b){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    if (number1 > number2) {
+        return number1
+    }else{
+        return number2
+    }
+}
+
 module.exports = {
     add,
     subtract,
-    multiply
+    multiply,
+    numMax
 }
