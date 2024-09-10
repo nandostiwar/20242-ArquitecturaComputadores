@@ -29,11 +29,14 @@ function Calculadora(){
             <form>
                 <input type="text" className="number" onChange={(e)=>{setNumber1(e.target.value)}}/><br />
                 <input type="text" className="number" onChange={(e)=>{setNumber2(e.target.value)}}/><br />
-                <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
-                <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="Sumar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="Restar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="Multiplicar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="Mayor" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="Menor" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="Promedio" onClick={handleSubmit}/>
             </form>
-            <Resultado resultado={"El resultado es "+ resultado}/>
+            <Resultado resultado={"El Resultado es :"+ resultado}/>
         </div>
     )
 }
