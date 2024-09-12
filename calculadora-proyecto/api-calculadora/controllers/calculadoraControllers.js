@@ -45,7 +45,7 @@ function menor(req, res){
     })
 }
 
-function promedi(req, res){
+function promedio(req, res){
     const {body} = req;
     const {number1, number2} = body;
     const result = prom(number1, number2);
@@ -60,5 +60,5 @@ module.exports = {
     multiplicar,
     mayor,
     menor,
-    promedi
+    promedio
 }
