@@ -29,6 +29,7 @@ function UserHome({user}){
             <select id="selectSignos" onClick={handleSelect}>
                 <option value="0">Seleciona un signo zodiacal</option>
                 <option value="Aries">Aries</option>
+                <option value="Tauro">Tauro</option>
                 <option value="Geminis">Géminis</option>
                 <option value="Cancer">Cáncer</option>
                 <option value="Leo">Leo</option>

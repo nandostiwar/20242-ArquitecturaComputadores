@@ -38,6 +38,7 @@ function AdminHome({user}){
             <select id="editSignos" onClick={handleSelect}>
                 <option value="0">Seleciona un signo zodiacal</option>
                 <option value="Aries">Aries</option>
+                <option value="Tauro">Tauro</option>
                 <option value="Geminis">Géminis</option>
                 <option value="Cancer">Cáncer</option>
                 <option value="Leo">Leo</option>
