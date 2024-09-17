@@ -1,34 +1,50 @@
-const { ascendente, descendente, calcularFormula } = require('../operaciones/operaciones.js');
+const {
 
-function ordenarAscendente(req, res) {
-    const { body } = req;
-    const { A, B, C, D, E, F } = body; 
-    const result = ascendente([A, B, C, D, E, F]); 
-    res.json({
-        resultado: result
-    });
+} = require('../operaciones/operaciones.js');
+
+
+function ordenar(req, res) {
+    const { values, order } = req.body;
+
+    try {
+        let orderedValues = Object.entries(values);
+
+        if (order === 'asc') {
+            orderedValues.sort((a, b) => a[1] - b[1]); 
+        } else if (order === 'desc') {
+            orderedValues.sort((a, b) => b[1] - a[1]); 
+        }
+
+        const valoresOrdenados = orderedValues.map(([key, valor]) => `${key}: ${valor}`);
+        res.json({ valoresOrdenados });
+    } catch (error) {
+        res.status(400).json({ error: 'Error al ordenar los valores' });
+    }
 }
 
-function ordenarDescendente(req, res) {
-    const { body } = req;
-    const { A, B, C, D, E, F } = body; 
-    const result = descendente([A, B, C, D, E, F]);
-    res.json({
-        resultado: result
-    });
-}
+function evaluar(req, res) {
+    const { ecuacion, values } = req.body;
 
-function ejecutarFormula(req, res) {
-    const { body } = req;
-    const { formula, A, B, C, D, E, F } = body; 
-    const result = calcularFormula(formula, { A, B, C, D, E, F }); 
-    res.json({
-        resultado: result
-    });
+    try {
+        let ecuacionEvaluada = ecuacion;
+        
+        Object.entries(values).forEach(([key, valor]) => {
+            const regex = new RegExp(`(\\d*)${key}`, 'g');
+            ecuacionEvaluada = ecuacionEvaluada.replace(regex, (match, coef) => {
+                coef = coef || 1;
+                return `${coef * valor}`; 
+            });
+        });
+
+        const resultado = eval(ecuacionEvaluada);
+        res.json({ resultado });
+    } catch (error) {
+        res.status(400).json({ error: 'Ecuación no valida' });
+    }
+
 }
 
 module.exports = {
-    ordenarAscendente,
-    ordenarDescendente,
-    ejecutarFormula
-}
+    ordenar,
+    evaluar
+};

@@ -1,31 +1,51 @@
-/**
- * @param {Array} arr 
- * @returns Array
- */
-function ascendente(arr) {
-    return arr.sort((a, b) => a - b);
-}
 
 /**
- * @param {Array} arr 
- * @returns Array
- */
-function descendente(arr) {
-    return arr.sort((a, b) => b - a);
-}
-
-/**
- * @param {String} formula 
- * @param {Object} variables 
+ * @param {Number} a 
+ * @param {Number} b 
  * @returns Number
  */
-function calcularFormula(formula, variables) {
-    const { A, B, C, D, E, F } = variables;
-    return eval(formula);
+function add(a, b){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    return number1 + number2;
 }
 
+function subtract(a, b){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    return number1 - number2;
+}
+
+function multiply(a, b){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    return number1 * number2;
+}
+
+function minor(a,b){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    return Math.min(number1, number2);
+}
+
+function major(a,b){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    return Math.max(number1, number2);
+}
+
+function prom(a,b){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    return (number1 + number2) / 2;
+}
+
+
 module.exports = {
-    ascendente,
-    descendente,
-    calcularFormula
+    add,
+    subtract,
+    multiply, 
+    minor,
+    major,
+    prom,
 }

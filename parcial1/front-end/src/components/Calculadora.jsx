@@ -1,70 +1,181 @@
 import { useState } from "react";
-import '../styles/Calculadora.css'
+import '../styles/Calculadora.css';
 import Resultado from "./Resultado";
 
-function Calculadora(){
-    const [number1, setNumber1] = useState('');
-    const [number2, setNumber2] = useState('');
-    const [resultado, setResultado] = useState('');
-    
-    const [A, setA] = useState('');
-    const [B, setB] = useState('');
-    const [C, setC] = useState('');
-    const [D, setD] = useState('');
-    const [E, setE] = useState('');
-    const [F, setF] = useState('');
-    const [formula, setFormula] = useState('');
+function Calculadora() {
+    const [inputs, setInputs] = useState({
+        A: { enabled: false, value: '' },
+        B: { enabled: false, value: '' },
+        C: { enabled: false, value: '' },
+        D: { enabled: false, value: '' },
+        E: { enabled: false, value: '' },
+        F: { enabled: false, value: '' }
+    });
 
-    function handleSubmit(e){
-        e.preventDefault();
-        const operacion = e.target.value;
-        fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
+    const [resultadoOrden, setResultadoOrden] = useState(''); 
+    const [ecuacion, setEcuacion] = useState('');
+    const [resultadoEval, setResultadoEval] = useState(''); 
+
+    const handleInputChange = (e, key) => {
+        setInputs({
+            ...inputs,
+            [key]: { ...inputs[key], value: e.target.value }
+        });
+    };
+
+    const handleCheckboxChange = (e, key) => {
+        setInputs({
+            ...inputs,
+            [key]: { ...inputs[key], enabled: e.target.checked }
+        });
+    };
+
+    const getEnabledValues = () => {
+        const values = {};
+        Object.keys(inputs).forEach(key => {
+            if (inputs[key].enabled) {
+                values[key] = parseFloat(inputs[key].value);
+            }
+        });
+        return values;
+    };
+
+    const handleSortAsc = () => {
+        const values = getEnabledValues();
+        fetch(`http://localhost:3500/v1/calculadora/ordenar`, {
             method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({number1, number2})
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ values, order: 'asc' }) 
         })
-            .then(res =>res.json())
-            .then(responseData => {
-                setResultado(responseData.resultado);
-            });
-    }
+        .then(res => res.json())
+        .then(responseData => {
+            setResultadoOrden(`Valores ordenados de forma ascendente: ${responseData.valoresOrdenados}`);
+        });
+    };
 
-    function calcularEspecial() {
-        try {
-            const resultadoEspecial = eval(formula);
-            setResultado(resultadoEspecial);
-        } catch (error) {
-            setResultado('Error en la fórmula, ingrese una fórmula correcta');
-        }
-    }
+    const handleSortDesc = () => {
+        const values = getEnabledValues();
+        fetch(`http://localhost:3500/v1/calculadora/ordenar`, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ values, order: 'desc' })
+        })
+        .then(res => res.json())
+        .then(responseData => {
+            setResultadoOrden(`Valores ordenados de forma descendente: ${responseData.valoresOrdenados}`);
+        });
+    };
+
+    const handleEvaluate = () => {
+        const values = getEnabledValues();
+        fetch('http://localhost:3500/v1/calculadora/evaluar', {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ecuacion, values })
+        })
+        .then(res => res.json())
+        .then(responseData => {
+            setResultadoEval(`Ecuación: ${responseData.resultado}`);
+        });
+    };
 
     return (
         <div className="container">
             <h1 id="txtCalculadora">CALCULADORA</h1>
-            <form>
-                <input type="text" placeholder="A" className="number" onChange={(e) => setA(e.target.value)} /><br />
-                <input type="text" placeholder="B" className="number" onChange={(e) => setB(e.target.value)} /><br />
-                <input type="text" placeholder="C" className="number" onChange={(e) => setC(e.target.value)} /><br />
-                <input type="text" placeholder="D" className="number" onChange={(e) => setD(e.target.value)} /><br />
-                <input type="text" placeholder="E" className="number" onChange={(e) => setE(e.target.value)} /><br />
-                <input type="text" placeholder="F" className="number" onChange={(e) => setF(e.target.value)} /><br />
-                <input 
-                    type="text" 
-                    placeholder="Ingresa tu fórmula (ej. 2*A + 3*B)" 
-                    className="formula-input"
-                    onChange={(e) => setFormula(e.target.value)} 
-                /><br />
-    
-                <div className="bottom-buttons">
-                    <input type="button" className="btnEnviar" value="Ecuación :" onClick={calcularEspecial} />
-                    <input type="button" className="btnEnviar" value="Ascendente" onClick={() => {}} />
-                    <input type="button" className="btnEnviar" value="Descendente" onClick={() => {}} />
-                </div>
-            </form>
 
-            <Resultado resultado={"El Resultado es :"+ resultado}/>
+            <h2>Inputs Activados</h2>
+            <div className="input-section">
+                <div className="input-row">
+                    <input
+                        type="checkbox"
+                        onChange={(e) => handleCheckboxChange(e, 'A')}
+                    />
+                    <label>A</label>
+                    <input className="number"
+                        type="text"
+                        disabled={!inputs['A'].enabled}
+                        onChange={(e) => handleInputChange(e, 'A')}
+                        value={inputs['A'].value}
+                    />
+                    <input
+                        type="checkbox"
+                        onChange={(e) => handleCheckboxChange(e, 'B')}
+                    />
+                    <label>B</label>
+                    <input className="number"
+                        type="text"
+                        disabled={!inputs['B'].enabled}
+                        onChange={(e) => handleInputChange(e, 'B')}
+                        value={inputs['B'].value}
+                    />
+                                        <input
+                        type="checkbox"
+                        onChange={(e) => handleCheckboxChange(e, 'C')}
+                    />
+                    <label>C</label>
+                    <input className="number"
+                        type="text"
+                        disabled={!inputs['C'].enabled}
+                        onChange={(e) => handleInputChange(e, 'C')}
+                        value={inputs['C'].value}
+                    />
+                </div>
+                <div className="input-row">
+                    <input
+                        type="checkbox"
+                        onChange={(e) => handleCheckboxChange(e, 'D')}
+                    />
+                    <label>D</label>
+                    <input className="number"
+                        type="text"
+                        disabled={!inputs['D'].enabled}
+                        onChange={(e) => handleInputChange(e, 'D')}
+                        value={inputs['D'].value}
+                    />
+                    <input
+                        type="checkbox"
+                        onChange={(e) => handleCheckboxChange(e, 'E')}
+                    />
+                    <label>E</label>
+                    <input className="number"
+                        type="text"
+                        disabled={!inputs['E'].enabled}
+                        onChange={(e) => handleInputChange(e, 'E')}
+                        value={inputs['E'].value}
+                    />
+                    <input
+                        type="checkbox"
+                        onChange={(e) => handleCheckboxChange(e, 'F')}
+                    />
+                    <label>F</label>
+                    <input className="number"
+                        type="text"
+                        disabled={!inputs['F'].enabled}
+                        onChange={(e) => handleInputChange(e, 'F')}
+                        value={inputs['F'].value}
+                    />
+                </div>
+            </div>
+
+            <div className="button-container">
+                <button className="btnEnviar" onClick={handleSortAsc}>Ordenar Ascendente</button>
+                <button className="btnEnviar" onClick={handleSortDesc}>Ordenar Descendente</button>
+            </div>
+
+            <h2>Ingresar Ecuación</h2>
+            <input
+                className="number"
+                type="text"
+                placeholder="Ingresa tu ecuación :"
+                value={ecuacion}
+                onChange={(e) => setEcuacion(e.target.value)}
+            />
+            <button className="btnEnviar" onClick={handleEvaluate}>Evaluar Ecuación</button>
+
+            <p>{resultadoOrden}</p>
+            <p>{resultadoEval}</p> 
         </div>
-    )
+    );
 }
 
 export default Calculadora;
