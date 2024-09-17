@@ -1,61 +1,31 @@
+/**
+ * @param {Array} arr 
+ * @returns Array
+ */
+function ascendente(arr) {
+    return arr.sort((a, b) => a - b);
+}
 
 /**
- * Sumar dos cantidades numéricas
- * @param {Number} a 
- * @param {Number} b 
+ * @param {Array} arr 
+ * @returns Array
+ */
+function descendente(arr) {
+    return arr.sort((a, b) => b - a);
+}
+
+/**
+ * @param {String} formula 
+ * @param {Object} variables 
  * @returns Number
  */
-function add(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 + number2;
-}
-
-function subtract(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 - number2;
-}
-
-function multiply(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return number1 * number2;
-}
-
-function NumMax(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 > number2) {
-        return number1;
-    }
-    else{
-        return number2;
-    }
-}
-
-function NumMin(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    if (number1 < number2) {
-        return number1;
-    }
-    else{
-        return number2;
-    }
-}
-
-function Prom(a, b){
-    let number1 = parseInt(a);
-    let number2 = parseInt(b);
-    return (number1 + number2) / 2;
+function calcularFormula(formula, variables) {
+    const { A, B, C, D, E, F } = variables;
+    return eval(formula);
 }
 
 module.exports = {
-    add,
-    subtract,
-    multiply,
-    NumMax,
-    NumMin,
-    Prom
+    ascendente,
+    descendente,
+    calcularFormula
 }
