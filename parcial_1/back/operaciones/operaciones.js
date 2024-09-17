@@ -22,35 +22,31 @@ function multiply(a, b){
     let number2 = parseInt(b);
     return number1 * number2;
 }
-function numax(a,b){
+
+function minor(a,b){
     let number1 = parseInt(a);
     let number2 = parseInt(b);
-    if (number1>number2){
-        return number1
-    }else{
-        return number2
-    }
+    return Math.min(number1, number2);
 }
 
-function numen(a,b){
+function major(a,b){
     let number1 = parseInt(a);
     let number2 = parseInt(b);
-    if (number1<number2){
-        return number1
-    }else{
-        return number2
-    }
+    return Math.max(number1, number2);
 }
+
 function prom(a,b){
     let number1 = parseInt(a);
     let number2 = parseInt(b);
-    return (number1 + number2)/2;
+    return (number1 + number2) / 2;
 }
+
+
 module.exports = {
     add,
     subtract,
-    multiply,
-    numax,
-    numen,
-    prom
+    multiply, 
+    minor,
+    major,
+    prom,
 }
