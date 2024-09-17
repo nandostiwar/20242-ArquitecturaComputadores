@@ -9,6 +9,9 @@ router
     .post('/mayor', calculadoraControllers.mayor)
     .post('/menor', calculadoraControllers.menor)
     .post('/promedio', calculadoraControllers.promedio)
+    .post('/asendente', calculadoraControllers.asendente)
+    .post('/desendente', calculadoraControllers.desendente)
+
    
 
 module.exports = router;

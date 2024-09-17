@@ -46,11 +46,40 @@ function prom(a, b){
     return (number1 + number2)/2
 }
 
+function asen(a, b,c,d,e,f){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    let number3 = parseInt(c);
+    let number4 = parseInt(d);
+    let number5 = parseInt(e);
+    let number6 = parseInt (f);
+    let numeros=[];
+    numeros.push(number1, number2 , number3, number4, number5, number6)
+    numeros.sort((a, b) => b - a);
+
+    return (numeros)
+}
+function desen(a, b, c,d,e,f){
+    let number1 = parseInt(a);
+    let number2 = parseInt(b);
+    let number3 = parseInt(c);
+    let number4 = parseInt(d);
+    let number5 = parseInt(e);
+    let number6 = parseInt (f);
+    let numeros=[];
+    numeros.push(number1, number2 , number3, number4, number5, number6)
+    numeros.sort((a, b) => a - b);
+
+    return (numeros)
+
+}
 module.exports = {
     add,
     subtract,
     multiply,
     numax,
     numen,
-    prom
+    prom,
+    asen,
+    desen
 }
