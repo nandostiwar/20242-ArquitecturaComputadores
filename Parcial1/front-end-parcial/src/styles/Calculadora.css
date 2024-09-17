@@ -1,0 +1,42 @@
+body{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.container{
+    text-align: center;
+    justify-content: center;
+    background-color: rgb(36, 137, 253);
+    padding: 50px;
+    margin: 50px;
+    border-radius: 50px;
+    width: 500px;
+    display: block;
+}
+
+
+.number{
+    margin:10px;
+    border-radius: 20px;
+    height: px;
+    border-radius: 20px;
+    height: 35px;
+    text-align: center;
+    border: 1px solid #ff8484;
+}
+
+.btnEnviar{
+    border-radius: 10px;
+    width: 150px;
+    height: 50px;
+    background-color: rgb(133, 88, 255);
+    color: white;
+    border-color: rgb(195, 252, 244);
+    margin-left: 10px;
+}
+
+#txtCalculadora{
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
