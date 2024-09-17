@@ -24,8 +24,7 @@ function Calculadora(){
             .then(res =>res.json())
             .then(responseData => {
                 setResultado(responseData.resultado)
-                // setResultado(responseData)
-                // console.log(resultado)
+                
             })
     }
     const toggleInput = (index) => {//
