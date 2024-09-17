@@ -66,7 +66,6 @@ function Calculadora() {
         });
     };
 
-    // Función para evaluar la ecuación
     const handleEvaluate = () => {
         const values = getEnabledValues();
         fetch('http://localhost:3500/v1/calculadora/evaluar', {
