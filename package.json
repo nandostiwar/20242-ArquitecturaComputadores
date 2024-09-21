@@ -1,0 +1,19 @@
+{
+  "name": "20242-arquitecturacomputadores",
+  "version": "1.0.0",
+  "main": "nando.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nandostiwar/20242-ArquitecturaComputadores.git"
+  },
+  "author": "Nani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nandostiwar/20242-ArquitecturaComputadores/issues"
+  },
+  "homepage": "https://github.com/nandostiwar/20242-ArquitecturaComputadores#readme",
+  "description": ""
+}
