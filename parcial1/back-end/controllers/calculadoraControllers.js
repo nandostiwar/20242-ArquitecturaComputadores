@@ -26,10 +26,15 @@ function evaluar(req, res) {
     const { ecuacion, values } = req.body;
 
     try {
-        let ecuacionEvaluada = ecuacion;
+        let ecuacionEvaluada = ecuacion.toLowerCase();
+        const lowerCaseValues = {};
         
-        Object.entries(values).forEach(([key, valor]) => {
-            const regex = new RegExp(`(\\d*)${key}`, 'g');
+        Object.entries(lowerCaseValues).forEach(([key, valor]) => {
+            lowerCaseValues[key.toLowerCase()] = valor;
+            });
+
+        Object.entries(lowerCaseValues).forEach(([key, valor]) => {    
+            const regex = new RegExp(`(\\d*)${key}`, 'gi');
             ecuacionEvaluada = ecuacionEvaluada.replace(regex, (match, coef) => {
                 coef = coef || 1;
                 return `${coef * valor}`; 
