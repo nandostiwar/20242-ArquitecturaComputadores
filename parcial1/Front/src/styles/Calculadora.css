@@ -7,7 +7,7 @@ body{
 .container{
     text-align: center;
     justify-content: center;
-    background-color: gray;
+    background-color: rgb(244, 239, 239);
     padding: 50px;
     margin: 50px;
     border-radius: 50px;

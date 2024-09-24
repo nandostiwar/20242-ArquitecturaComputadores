@@ -63,7 +63,7 @@ function menor(req, res){
         const valoresOrdenados = orderedValues.map(([key, valor]) => `${key}: ${valor}`);
         res.json({ valoresOrdenados });
     } catch (error) {
-        res.status(400).json({ error: 'Error al ordenar los valores' });
+        res.status(400).json({ error: 'No se ordenaron los valores' });
     }
 }
 

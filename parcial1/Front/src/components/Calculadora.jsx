@@ -49,7 +49,7 @@ function Calculadora() {
         })
         .then(res => res.json())
         .then(responseData => {
-            setResultadoOrden(`Valores ordenados ascendentemente: ${responseData.valoresOrdenados}`);
+            setResultadoOrden(`Ascendentemente: ${responseData.valoresOrdenados}`);
         });
     };
 
@@ -62,7 +62,7 @@ function Calculadora() {
         })
         .then(res => res.json())
         .then(responseData => {
-            setResultadoOrden(`Valores ordenados descendentemente: ${responseData.valoresOrdenados}`);
+            setResultadoOrden(`Descendentemente: ${responseData.valoresOrdenados}`);
         });
     };
 
@@ -75,7 +75,7 @@ function Calculadora() {
         })
         .then(res => res.json())
         .then(responseData => {
-            setResultadoEval(`Resultado de la ecuación: ${responseData.resultado}`);
+            setResultadoEval(`Resultado: ${responseData.resultado}`);
         });
     };
 
@@ -83,7 +83,7 @@ function Calculadora() {
         <div className="container">
             <h1 id="txtCalculadora">CALCULADORA</h1>
 
-            {['A', 'B', 'C', 'D', 'E', 'F'].map(key => (
+            {['A', 'B', 'C', 'D', 'E', 'F'].map(key =>(
                 <div key={key}>
                     <input
                         type="checkbox"
