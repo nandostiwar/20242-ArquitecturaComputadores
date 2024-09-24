@@ -29,7 +29,7 @@ function evaluar(req, res) {
         let ecuacionEvaluada = ecuacion.toLowerCase();
         const lowerCaseValues = {};
         
-        Object.entries(lowerCaseValues).forEach(([key, valor]) => {
+        Object.entries(values).forEach(([key, valor]) => {
             lowerCaseValues[key.toLowerCase()] = valor;
             });
 
