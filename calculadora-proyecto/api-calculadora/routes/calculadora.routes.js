@@ -8,3 +8,5 @@ router
     .post('/multiplicar', calculadoraControllers.multiplicar)
 
 module.exports = router;
+
+module.exports = router;
