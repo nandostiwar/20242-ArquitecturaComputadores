@@ -1,16 +1,24 @@
 body{
     justify-content: center;
     text-align: center;
+    height: 100%;
+    margin: 0;
 }
 
 .entry{
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 10px 20px 10px 35px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
 }
 
-form{
-    padding: 20px;
-    padding-top: 10%;
+form {
+    background-image: url("../img/horoscopo.jpg");
+    background-size: cover; 
+    background-position:center; 
+    padding: 20px; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #btnEnviar{
@@ -26,10 +34,12 @@ form{
 
 .txt{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
 }
 
 #txtBienvenida{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-style: oblique;
     color: white;
+    text-shadow: 1px 1px 2px black;
 }
