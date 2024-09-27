@@ -6,7 +6,7 @@ body{
 
 .container{
     text-align: center;
-    justify-content: center;
+    align-items: center;
     background-color: gray;
     padding: 50px;
     margin: 50px;
@@ -14,6 +14,9 @@ body{
     width: 500px;
     display: block;
 }
+
+
+
 
 .number{
     margin: 20px;
