@@ -15,5 +15,8 @@
     "url": "https://github.com/nandostiwar/20242-ArquitecturaComputadores/issues"
   },
   "homepage": "https://github.com/nandostiwar/20242-ArquitecturaComputadores#readme",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "react-scripts": "^5.0.1"
+  }
 }
