@@ -3,7 +3,7 @@ import './styles/AdminHome.css'
 import { useState } from "react";
 
 function AdminHome({user}){
-    if(user!=='admin' || !user){
+    if(user!=='Admin' || !user){
         return <Navigate to="/"/>
     }
     const home = useNavigate();
@@ -35,7 +35,7 @@ function AdminHome({user}){
     return (
         <div class="container">
             <h2 id="textoAdmin">Edita un Signo Zodiacal</h2>
-            <select id="editSignos" onClick={handleSelect}>
+            <select id="editSignos" onChange={handleSelect}>
                 <option value="0">Seleciona un signo zodiacal</option>
                 <option value="Aries">Aries</option>
                 <option value="Tauro">Tauro</option>

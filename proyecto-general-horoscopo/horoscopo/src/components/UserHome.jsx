@@ -4,7 +4,7 @@ import TextSigno from "./TextSigno.jsx";
 import { useState } from "react";
 
 function UserHome({user}){
-    if(user!=="user" || !user){
+    if(user!=="User" || !user){
         return <Navigate to="/"/>
     }
     const home = useNavigate();
@@ -26,7 +26,7 @@ function UserHome({user}){
     return (
         <div className="container">
             <div id="txtSeleccionPage"><h3>Selecciona tu signo zodiacal</h3></div>
-            <select id="selectSignos" onClick={handleSelect}>
+            <select id="selectSignos" onChange={handleSelect}>
                 <option value="0">Seleciona un signo zodiacal</option>
                 <option value="Aries">Aries</option>
                 <option value="Tauro">Tauro</option>
