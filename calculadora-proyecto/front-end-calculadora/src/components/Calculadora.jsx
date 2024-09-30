@@ -6,44 +6,29 @@ import Resultado from "./Resultado";
 
 function Calculadora() {
   const [inputs, setInputs] = useState({
-    A: { status: false, value: "" },
-    B: { status: false, value: "" },
-    C: { status: false, value: "" },
-    D: { status: false, value: "" },
-    E: { status: false, value: "" },
-    F: { status: false, value: "" },
+   
   });
 
-  const [resultadOrden, setResultadOrden] = useState("");
+  function obtenerValores() {
+    const inputs = document.querySelectorAll('.number-input');
+    const valores = Array.from(inputs).map(input => parseFloat(input.value)).filter(valor => !isNaN(valor));
+    return valores;
+  }
 
-  //manejo de flujo por si cambia el input
+     // Función para ordenar descendente
+     function ordenarDesc() {
+      const valores = obtenerValores();
+      valores.sort((a, b) => b - a); // Ordena de mayor a menor
+      document.getElementById('resultado').value = valores.join(', ');
+    }
 
-  const handleInputChange = (a, key) => {
-    setInputs({
-      ...inputs,
-      [key]: { ...inputs[key], value: a.target.value },
-    });
-  };
+     // Función para ordenar ascendente
+     function ordenarAsc() {
+      const valores = obtenerValores();
+      valores.sort((a, b) => a - b); // Ordena de menor a mayor
+      document.getElementById('resultado').value = valores.join(', ');
+    }
 
-  //manejo por si cmabia el checkbox
-
-  const handleCheckboxChange = (a, key) => {
-    setInputs({
-      ...inputs,
-      [key]: { ...inputs[key], status: a.target.checked },
-    });
-  };
-
-  //obteninedo valores de lo habilitaod
-
-  const obtenerValoresStatus = () => {
-    const valores = {};
-    Object.keys(inputs).forEach((key) => {
-      if (inputs[key].status) {
-        valores[key] = parseFloat(inputs[key].value);
-      }
-    });
-  };
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -62,28 +47,24 @@ function Calculadora() {
   }
 
   return (
-    <div className="container">
-      <h1>Orden de datos</h1>
+   
+        <div className="container">
+         <p>A</p> <input type="text" className="numberInput" />
+          <p>B</p><input type="text"  className="numberInput"/>
+          <p>C</p><input type="text"  className="numberInput"/>
+          <p>D</p><input type="text"  className="numberInput"/>
+          <p>E</p><input type="text"  className="numberInput"/>
+          <p>F</p><input type="text"  className="numberInput"/>
 
-      <div className="">
-        {["a", "b", "c", "d", "e", "f"].map((key) => (
-          <div key={key}>
-            <input
-              type="checkbox"
-              onChange={(a) => handleCheckboxChange(a, key)}
-            />
-            <input
-              type="text"
-              disabled={!inputs[key].enable
-                
-              }
-              onChange={(a) => handleInputChange(a, key)}
-              value={inputs[key].value}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
+
+          <p>Resultado</p><input type="text"  className="Resultado"/>
+
+          <button onclick="ordenarAsc()">Ordenar Ascendente</button>
+          <button onclick="ordenarDesc()">Ordenar Descendente</button>
+          
+        </div>
+
+
   );
 }
 

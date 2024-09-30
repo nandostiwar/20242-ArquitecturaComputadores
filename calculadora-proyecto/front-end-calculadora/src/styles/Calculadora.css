@@ -4,16 +4,18 @@ body{
     display: flex;
 }
 
-.container{
-    text-align: center;
-    align-items: center;
-    background-color: gray;
-    padding: 50px;
-    margin: 50px;
-    border-radius: 50px;
-    width: 500px;
-    display: block;
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas de igual tamaño */
+    gap: 20px;
 }
+
+input {
+    width: 10rem;
+
+    height: 1rem;
+}
+
 
 
 
