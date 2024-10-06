@@ -34,8 +34,38 @@ const updateSigno = async (req, res)=>{
     })
 }
 
+const login = async (req,res) => {
+    
+    const { body } = req;
+    let { username, password } = body;
+
+    let all_users = await fs.readFile(path.join(__dirname,'../../db/users.json'));
+    let array_users = JSON.parse(all_users);
+    //donde voy a guardar el usuario si es valido
+    let user_select = []
+    
+    // recorrer todos los usuarios almacenados en el json 
+    array_users.forEach(user => {
+        /* 
+            comparar el usuario que me llega en el post con
+            el que tengo almacenado en el json
+        */
+        if(user.username == username && user.password == password){
+            // si las credenciales son validas
+            // asigno el user al user_select
+            user_select = user
+        }
+    });
+    // devuelvo los datos del usuario si son correctos
+    res.json({
+        usuario: user_select.username,
+        rol:user_select.rol
+    })
+}
+
 module.exports = {
     getAllSignos,
     getOneSigno,
-    updateSigno
+    updateSigno,
+    login
 }

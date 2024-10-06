@@ -1,0 +1,22 @@
+[
+    {
+      "username" :"granja",
+      "password" : "123456789",
+      "rol" : "user"
+    },
+    {
+      "username" :"admin",
+      "password" : "123456789",
+      "rol" : "admin"
+    },
+    {
+      "username" :"tatiana",
+      "password" : "123",
+      "rol" : "user"
+    },
+    {
+      "username" :"kevin",
+      "password" : "kevin123",
+      "rol" : "admin"
+    }
+  ]
