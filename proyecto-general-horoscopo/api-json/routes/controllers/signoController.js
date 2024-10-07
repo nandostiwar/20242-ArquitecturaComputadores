@@ -26,16 +26,34 @@ const updateSigno = async (req, res)=>{
         [signoEditar]: textoEditar
     }
 
-    // console.log(objUpdate);
     await fs.writeFile(path.join(__dirname,'../../db/signos.json'), JSON.stringify(objUpdate, null, 2), {encoding: 'utf-8'})
 
     res.json({
         message: "Updated"
     })
 }
+const validateUser = async (req, res) => {
+    const { username, password } = req.body;  
+    try {
+        
+        const usersData = await fs.readFile(path.join(__dirname, '../../db/usuarios.json'), 'utf-8');
+        const usuarios = JSON.parse(usersData).usuarios;
+
+        const userFound = usuarios.find(user => user.username === username && user.password === password);
+
+        if (userFound) {
+            res.status(200).json({ role: userFound.role });
+        } else {
+            res.status(401).json({ message: 'Nombre de usuario o contraseña incorrectos.' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Error al validar el usuario.' });
+    }
+}
 
 module.exports = {
     getAllSignos,
     getOneSigno,
-    updateSigno
+    updateSigno,
+    validateUser
 }
