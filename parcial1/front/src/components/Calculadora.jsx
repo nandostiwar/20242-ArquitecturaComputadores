@@ -45,11 +45,11 @@ function Calculadora() {
         fetch(`http://localhost:3500/v1/calculadora/ordenar`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ values, order: 'asc' }) 
+            body: JSON.stringify({ values, order: 'ascendente' }) 
         })
         .then(res => res.json())
         .then(responseData => {
-            setResultadoOrden(`Valores ordenados ascendentemente: ${responseData.valoresOrdenados}`);
+            setResultadoOrden(`Valores ascendentes: ${responseData.valoresOrdenados}`);
         });
     };
 
@@ -58,11 +58,11 @@ function Calculadora() {
         fetch(`http://localhost:3500/v1/calculadora/ordenar`, {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ values, order: 'desc' })
+            body: JSON.stringify({ values, order: 'descendente' })
         })
         .then(res => res.json())
         .then(responseData => {
-            setResultadoOrden(`Valores ordenados descendentemente: ${responseData.valoresOrdenados}`);
+            setResultadoOrden(`Valores descendentes: ${responseData.valoresOrdenados}`);
         });
     };
 
@@ -84,21 +84,23 @@ function Calculadora() {
             <h1 id="txtCalculadora">CALCULADORA</h1>
 
             <h2>Inputs Activados</h2>
-            {['A', 'B', 'C', 'D', 'E', 'F'].map(key => (
-                <div key={key}>
-                    <input
-                        type="checkbox"
-                        onChange={(e) => handleCheckboxChange(e, key)}
-                    />
-                    <label>{key}</label>
-                    <input className="number"
-                        type="text"
-                        disabled={!inputs[key].enabled}
-                        onChange={(e) => handleInputChange(e, key)}
-                        value={inputs[key].value}
-                    />
-                </div>
-            ))}
+            <div className="input-grid">
+                {['A', 'B', 'C', 'D', 'E', 'F'].map(key => (
+                    <div key={key}>
+                        <input
+                            type="checkbox"
+                            onChange={(e) => handleCheckboxChange(e, key)}
+                        />
+                        <label>{key}</label>
+                        <input className="number"
+                            type="text"
+                            disabled={!inputs[key].enabled}
+                            onChange={(e) => handleInputChange(e, key)}
+                            value={inputs[key].value}
+                        />
+                    </div>
+                ))}
+            </div>
 
             <button className="btnEnviar" onClick={handleSortAsc}>Ordenar Ascendente</button>
             <button className="btnEnviar" onClick={handleSortDesc}>Ordenar Descendente</button>
@@ -107,7 +109,6 @@ function Calculadora() {
             <input
             className="number"
                 type="text"
-                placeholder="Ingresa tu ecuación (ej: 2A + 3B)"
                 value={ecuacion}
                 onChange={(e) => setEcuacion(e.target.value)}
             />

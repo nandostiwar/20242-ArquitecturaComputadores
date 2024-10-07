@@ -80,16 +80,19 @@ function ordenar(req, res) {
     try {
         let orderedValues = Object.entries(values);
 
-        if (order === 'asc') {
-            orderedValues.sort((a, b) => a[1] - b[1]); 
-        } else if (order === 'desc') {
+        if (order === 'ascendente') {
+            const suma = orderedValues.reduce((acc,[key, valor]) =>
+            acc + valor, 0);
+            return res.json({suma})
+        } else if (order === 'descendente') {
             orderedValues.sort((a, b) => b[1] - a[1]); 
         }
 
         const valoresOrdenados = orderedValues.map(([key, valor]) => `${key}: ${valor}`);
         res.json({ valoresOrdenados });
     } catch (error) {
-        res.status(400).json({ error: 'Error al ordenar los valores' });
+        res.status(400).json({ error: 'Error al ordenar,  algo salio mal' });
+
     }
 }
 
@@ -110,7 +113,7 @@ function evaluar(req, res) {
         const resultado = eval(ecuacionEvaluada);
         res.json({ resultado });
     } catch (error) {
-        res.status(400).json({ error: 'Ecuación inválida' });
+        res.status(400).json({ error: 'Ecuacion no valida' });
     }
 
 }
