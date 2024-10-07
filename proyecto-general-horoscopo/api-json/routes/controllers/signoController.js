@@ -34,8 +34,45 @@ const updateSigno = async (req, res)=>{
     })
 }
 
+const loginCompare = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // Leer archivo users.json
+        const usersData = await fs.readFile(path.join(__dirname, '../../db/users.json'));
+        const users = JSON.parse(usersData);
+
+        // Leer archivo admins.json
+        const adminsData = await fs.readFile(path.join(__dirname, '../../db/admins.json'));
+        const admins = JSON.parse(adminsData);
+
+        // Buscar el usuario en admins
+        const adminResult = admins.find(admin => admin.username === username && admin.password === password);
+
+        // Buscar el usuario en users
+        const userResult = users.find(user => user.username === username && user.password === password);
+
+        // Responder según el tipo de usuario
+        if (adminResult) {
+            // Si el usuario está en admins, es un ADMIN
+            return res.json({ status: "ADMIN", username: adminResult.username });
+        } else if (userResult) {
+            // Si el usuario está en users, es un USER
+            return res.json({ status: "USER", username: userResult.username });
+        } else {
+            // Si no está en ninguno, devolver un ERROR
+            return res.json({ status: "ERROR", message: "Usuario no encontrado" });
+        }
+    } catch (error) {
+        // Manejar errores
+        res.status(500).json({ status: "ERROR", message: "Error al procesar la solicitud", error: error.message });
+    }
+};
+
+
 module.exports = {
     getAllSignos,
     getOneSigno,
-    updateSigno
+    updateSigno,
+    loginCompare
 }
