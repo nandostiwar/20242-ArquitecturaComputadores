@@ -1,71 +1,41 @@
 import { useState } from "react";
-import "../styles/Calculadora.css";
+import '../styles/Calculadora.css'
 import Resultado from "./Resultado";
 
-//Deficion del estaod de inputs y checkbox
+function Calculadora(){
+    const [number1, setNumber1] = useState('');
+    const [number2, setNumber2] = useState('');
+    const [resultado, setResultado] = useState('');
 
-function Calculadora() {
-  const [inputs, setInputs] = useState({
-   
-  });
-
-  function obtenerValores() {
-    const inputs = document.querySelectorAll('.number-input');
-    const valores = Array.from(inputs).map(input => parseFloat(input.value)).filter(valor => !isNaN(valor));
-    return valores;
-  }
-
-     // Función para ordenar descendente
-     function ordenarDesc() {
-      const valores = obtenerValores();
-      valores.sort((a, b) => b - a); // Ordena de mayor a menor
-      document.getElementById('resultado').value = valores.join(', ');
+    function handleSubmit(e){
+        e.preventDefault();
+        const operacion = e.target.value;
+        fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({number1, number2})
+        })
+            .then(res =>res.json())
+            .then(responseData => {
+                setResultado(responseData.resultado)
+                // setResultado(responseData)
+                // console.log(resultado)
+            })
     }
 
-     // Función para ordenar ascendente
-     function ordenarAsc() {
-      const valores = obtenerValores();
-      valores.sort((a, b) => a - b); // Ordena de menor a mayor
-      document.getElementById('resultado').value = valores.join(', ');
-    }
-
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const operacion = e.target.value;
-    fetch(`http://localhost:3500/v1/calculadora/${operacion}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ number1, number2 }),
-    })
-      .then((res) => res.json())
-      .then((responseData) => {
-        setResultado(responseData.resultado);
-        // setResultado(responseData)
-        // console.log(resultado)
-      });
-  }
-
-  return (
-   
+    return (
         <div className="container">
-         <p>A</p> <input type="text" className="numberInput" />
-          <p>B</p><input type="text"  className="numberInput"/>
-          <p>C</p><input type="text"  className="numberInput"/>
-          <p>D</p><input type="text"  className="numberInput"/>
-          <p>E</p><input type="text"  className="numberInput"/>
-          <p>F</p><input type="text"  className="numberInput"/>
-
-
-          <p>Resultado</p><input type="text"  className="Resultado"/>
-
-          <button onclick="ordenarAsc()">Ordenar Ascendente</button>
-          <button onclick="ordenarDesc()">Ordenar Descendente</button>
-          
+            <h1 id="txtCalculadora">CALCULADORA</h1>
+            <form>
+                <input type="text" className="number" onChange={(e)=>{setNumber1(e.target.value)}}/><br />
+                <input type="text" className="number" onChange={(e)=>{setNumber2(e.target.value)}}/><br />
+                <input type="submit" className="btnEnviar" value="sumar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="restar" onClick={handleSubmit}/>
+                <input type="submit" className="btnEnviar" value="multiplicar" onClick={handleSubmit}/>
+            </form>
+            <Resultado resultado={"El resultado es "+ resultado}/>
         </div>
-
-
-  );
+    )
 }
 
-export default Calculadora;
+export default Calculadora
