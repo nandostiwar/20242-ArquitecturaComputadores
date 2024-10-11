@@ -34,41 +34,37 @@ const updateSigno = async (req, res)=>{
     })
 }
 
-const fs = require('fs').promises;
-const path = require('path');
+const loginCompare = async (req, res)=>{
+    const oneSigno = req.params.signo;
+    const allSignos = await fs.readFile(path.join(__dirname,'../../db/user.json'));
+    const objSignos = JSON.parse(allSignos);
+    const result = objSignos[oneSigno];
 
-const loginCompare = async (req, res) => {
+    const { username, password } = req.body;
+
     try {
-        const { username, password } = req.body;  // Obtener el usuario y contraseña del body de la solicitud
+        const allUsers = await fs.readFile(path.join(__dirname, '../../db/user.json'), 'utf-8');
+        const users = JSON.parse(allUsers).users;
+        
+        const user = users.find(u => u.username === username && u.password === password);
 
-        // Leer el archivo JSON con los usuarios y administradores
-        const allData = await fs.readFile(path.join(__dirname, '../../db/user.json'), 'utf-8');
-        const data = JSON.parse(allData);
-
-        // Verificar si el usuario está en la lista de usuarios
-        const user = data.users.find(user => 
-            user.username === username && user.password === password
-        );
-
-        // Verificar si el usuario está en la lista de administradores
-        const admin = data.admins.find(admin => 
-            admin.username === username && admin.password === password
-        );
-
-        // Verificar si es "user", "admin" o si no existe
         if (user) {
-            res.status(200).json({ message: "Acceso concedido: Usuario" });
-        } else if (admin) {
-            res.status(200).json({ message: "Acceso concedido: Administrador" });
+            res.json({ access: true, message: 'Login successful' });
         } else {
-            res.status(401).json({ message: "Credenciales incorrectas" });
+            res.json({ access: false, message: 'Invalid credentials' });
         }
-
     } catch (error) {
-        console.error("Error al leer el archivo JSON:", error);
-        res.status(500).json({ message: "Error interno del servidor" });
+        console.error('Error reading the file:', error);
+        res.status(500).json({ error: 'Error processing the request' });
     }
-};
+    
+    res.json(result)
+};    
+        
+
+
+
+
 
 
 
