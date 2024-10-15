@@ -9,19 +9,18 @@ function Form({ callback }) {
   const goTo = useNavigate();
 
   const validateUser = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+    console.log("Datos enviados:", { username, password });
     try {
-      const response = await axios.post(
-        "http://localhost:4000/v1/signos/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:4000/v1/auth/login", {
+        username,
+        password,
+      });
 
-      if (response.data.success) {
+      if (response.status === 200 && response.data.success) {
         const role = response.data.role;
-        callback(role);
+        callback(role); // Pasar el rol a través del callback
+
         if (role === "admin") {
           goTo("/adminHome");
         } else if (role === "user") {
@@ -29,8 +28,12 @@ function Form({ callback }) {
         }
       }
     } catch (error) {
-      console.error("Error al iniciar sesión:", error);
-      alert("Credenciales incorrectas");
+      if (error.response && error.response.status === 401) {
+        alert("Credenciales incorrectas");
+      } else {
+        console.error("Error en la solicitud:", error);
+        alert("Ocurrió un error en el servidor, intenta más tarde.");
+      }
     }
   };
 
@@ -43,14 +46,14 @@ function Form({ callback }) {
         className="entry"
         onChange={(e) => setUsername(e.target.value)}
       />
-      <br></br>
+      <br />
       <h4 className="txt">Contraseña</h4>
       <input
         type="password"
         className="entry"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <br></br>
+      <br />
       <input type="submit" value="Ingresar" id="btnEnviar" />
     </form>
   );

@@ -1,16 +1,28 @@
-const express = require('express');
-const {urlencoded, json} = require('express');
-const router = require('./routes/signos.routes.js');
-const cors = require('cors');
+const dotenv = require("dotenv");
+dotenv.config(); // Carga las variables de entorno al inicio
+
+const express = require("express");
+const { urlencoded, json } = require("express");
+const router = require("./routes/signos.routes.js");
+const authRouter = require("./routes/auth.routes.js");
+const cors = require("cors");
+const { client, dbName } = require("./config/mongodb.js");
 
 const app = express();
 
-app.use(urlencoded({extended: true}))
-app.use(json())
+const corsOptions = {
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"], // Asegúrate de permitir los encabezados que estás usando
+};
 
-app.use(cors())
-app.use('/v1/signos', router);
+app.use(urlencoded({ extended: true }));
+app.use(json());
+app.use(cors(corsOptions));
+app.use("/v1/signos", router);
+app.use("/v1/auth", authRouter);
 
-app.listen(4000, ()=>{
-    console.log('listening at port 4000');
-})
+const PORT = 4000;
+app.listen(PORT, () => {
+  console.log(`Listening at port ${PORT}`);
+});

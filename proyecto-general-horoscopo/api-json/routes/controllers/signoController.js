@@ -1,73 +1,65 @@
-const fs = require("fs/promises");
-const path = require("path");
+const client = require("../../config/mongodb");
+
+const dbName = "db";
 
 const getAllSignos = async (req, res) => {
-  const signo = await fs.readFile(path.join(__dirname, "../../db/signos.json"));
-  const signosJson = JSON.parse(signo);
-  res.json(signosJson);
+  try {
+    const db = client.db(dbName); // Accede a la base de datos
+    const signos = await db.collection("signos").find({}).toArray();
+    res.json(signos);
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener los signos", error });
+  }
 };
 
 const getOneSigno = async (req, res) => {
-  const oneSigno = req.params.signo;
-  const allSignos = await fs.readFile(
-    path.join(__dirname, "../../db/signos.json")
-  );
-  const objSignos = JSON.parse(allSignos);
-  const result = objSignos[oneSigno];
-  res.json(result);
+  const signoNombre = req.params.signo;
+  try {
+    const db = client.db(dbName); // Accede a la base de datos
+    const signo = await db
+      .collection("signos")
+      .findOne({ nombre: signoNombre });
+
+    if (signo) {
+      res.json(signo);
+    } else {
+      res.status(404).json({ message: "Signo no encontrado" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error al obtener el signo", error });
+  }
 };
 
 const updateSigno = async (req, res) => {
   const signoEditar = req.params.signoEditar;
   const { textoEditar } = req.body;
-  const allSignos = await fs.readFile(
-    path.join(__dirname, "../../db/signos.json")
-  );
-  const objSignos = JSON.parse(allSignos);
 
-  const objUpdate = {
-    ...objSignos,
-    [signoEditar]: textoEditar,
-  };
+  try {
+    const db = client.db(dbName); // Accede a la base de datos
+    const result = await db
+      .collection("signos")
+      .updateOne({ nombre: signoEditar }, { $set: { texto: textoEditar } }); // Asegúrate de que el campo sea correcto
 
-  // console.log(objUpdate);
-  await fs.writeFile(
-    path.join(__dirname, "../../db/signos.json"),
-    JSON.stringify(objUpdate, null, 2),
-    { encoding: "utf-8" }
-  );
-
-  res.json({
-    message: "Updated",
-  });
+    if (result.matchedCount > 0) {
+      res.json({ message: "Signo actualizado" });
+    } else {
+      res.status(404).json({ message: "Signo no encontrado" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error al actualizar el signo", error });
+  }
 };
 
 const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    // Leer el archivo de usuarios
-    const usersData = await fs.readFile(
-      path.join(__dirname, "../../db/users.json")
-    );
-    const adminsData = await fs.readFile(
-      path.join(__dirname, "../../db/admins.json")
-    );
-    const users = JSON.parse(usersData);
-    const admins = JSON.parse(adminsData);
-
-    // Buscar en la lista de usuarios y admins
-    let user = users.find(
-      (u) => u.user === username && u.password === password
-    );
-    let role = "user";
-
-    if (!user) {
-      user = admins.find((a) => a.user === username && a.password === password);
-      role = user ? "admin" : null;
-    }
+    const db = client.db(dbName); // Accede a la base de datos
+    // Verificar primero si es un admin
+    let user = await db.collection("users").findOne({ username, password });
 
     if (user) {
+      const role = user.role || null; // Asegúrate de que `role` esté definido en tu colección
       res.json({ role, success: true });
     } else {
       res
@@ -75,6 +67,7 @@ const loginUser = async (req, res) => {
         .json({ success: false, message: "Credenciales incorrectas" });
     }
   } catch (error) {
+    console.error("Error en el login:", error);
     res.status(500).json({ success: false, message: "Error en el servidor" });
   }
 };
