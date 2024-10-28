@@ -24,7 +24,7 @@ function UserHome({ user }) {
           }
           return response.json();
         })
-        .then((responseData) => setTextoSigno(responseData.texto)) // Asegúrate de acceder a la propiedad correcta
+        .then((responseData) => setTextoSigno(responseData.texto))
         .catch((error) => console.error("Error fetching data:", error));
     }
   }

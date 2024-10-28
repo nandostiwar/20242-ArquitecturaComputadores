@@ -9,7 +9,7 @@ function Form({ callback }) {
   const goTo = useNavigate();
 
   const validateUser = async (event) => {
-    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+    event.preventDefault();
     console.log("Datos enviados:", { username, password });
     try {
       const response = await axios.post("http://localhost:4000/v1/auth/login", {
@@ -19,7 +19,7 @@ function Form({ callback }) {
 
       if (response.status === 200 && response.data.success) {
         const role = response.data.role;
-        callback(role); // Pasar el rol a través del callback
+        callback(role);
 
         if (role === "admin") {
           goTo("/adminHome");

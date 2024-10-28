@@ -29,7 +29,7 @@ function AdminHome({ user }) {
       body: JSON.stringify({ textoEditar }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data)) // Manejar la respuesta aquí
+      .then((data) => console.log(data))
       .catch((error) => console.error("Error updating sign:", error));
   }
 

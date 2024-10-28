@@ -1,5 +1,5 @@
 const dotenv = require("dotenv");
-dotenv.config(); // Carga las variables de entorno al inicio
+dotenv.config();
 
 const express = require("express");
 const { urlencoded, json } = require("express");
@@ -13,7 +13,7 @@ const app = express();
 const corsOptions = {
   origin: "http://localhost:5173",
   methods: ["GET", "POST", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization"], // Asegúrate de permitir los encabezados que estás usando
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 app.use(urlencoded({ extended: true }));

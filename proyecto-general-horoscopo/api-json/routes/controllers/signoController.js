@@ -4,7 +4,7 @@ const dbName = "db";
 
 const getAllSignos = async (req, res) => {
   try {
-    const db = client.db(dbName); // Accede a la base de datos
+    const db = client.db(dbName);
     const signos = await db.collection("signos").find({}).toArray();
     res.json(signos);
   } catch (error) {
@@ -15,7 +15,7 @@ const getAllSignos = async (req, res) => {
 const getOneSigno = async (req, res) => {
   const signoNombre = req.params.signo;
   try {
-    const db = client.db(dbName); // Accede a la base de datos
+    const db = client.db(dbName);
     const signo = await db
       .collection("signos")
       .findOne({ nombre: signoNombre });
@@ -35,10 +35,10 @@ const updateSigno = async (req, res) => {
   const { textoEditar } = req.body;
 
   try {
-    const db = client.db(dbName); // Accede a la base de datos
+    const db = client.db(dbName);
     const result = await db
       .collection("signos")
-      .updateOne({ nombre: signoEditar }, { $set: { texto: textoEditar } }); // Asegúrate de que el campo sea correcto
+      .updateOne({ nombre: signoEditar }, { $set: { texto: textoEditar } });
 
     if (result.matchedCount > 0) {
       res.json({ message: "Signo actualizado" });
@@ -54,12 +54,11 @@ const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const db = client.db(dbName); // Accede a la base de datos
-    // Verificar primero si es un admin
+    const db = client.db(dbName);
     let user = await db.collection("users").findOne({ username, password });
 
     if (user) {
-      const role = user.role || null; // Asegúrate de que `role` esté definido en tu colección
+      const role = user.role || null;
       res.json({ role, success: true });
     } else {
       res
